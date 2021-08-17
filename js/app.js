@@ -4,10 +4,7 @@ $(document).ready(function () {
   const URL = 'http://127.0.0.1:5000/';
  
   (function getAllProduct(){
-    fetch(URL+'products',{
-      mode:'no-cors',
-      method:'GET'
-    })
+    fetch(URL+'products')
     .then((response) => response.json())
     .then((data) => displayProduct(data))
     .catch(error => {
@@ -16,33 +13,28 @@ $(document).ready(function () {
   })()
 
   function displayProduct(data) {
-    console.log(data);
-    const product = data.products;
-    console.log('====================================');
-    console.log(products);
-    console.log('====================================');
+    const products = data.products;
     $("tbody").empty();
-    $.each(product, function (i, elt) {
-      const ligne = `<tr>
-            <td>${elt.id}</td>
+    $.each(products, function (i, elt) {
+      const ligne = `<tr class='text-center'>
+            <td>${i + 1 }</td>
             <td>${elt.name}</td>
-            <td>${elt.price}</td>
-            <td>${elt.quantity}</td>
-            <td>${elt.content}</td>
-        
+            <td>${elt.price} FCFA</td>
             <td>
-            <div class="d-flex justify-content-center mt-0"> 
-                     <a class="btn btn-warning mr-2" 
-                     href='#' 
-                     name="detail" 
-                    >  
-                     <i class="fa fa-edit">Detail</i></a>
-                     <a class="btn btn-danger mr-2" name="detail" href=" ">  
-                     <i class="fa fa-edit">Supprimer</i></a>
+            <div class="d-flex justify-content-center   mt-0"> 
+                   <a class="btn btn-info mr-2 productToDetail" href='#' id='${i}' name="detail" name="detail" >  
+                       <i class="fa fa-edit">Detail</i>
+                     </a>
+                     <a class="btn btn-warning mr-2 productToUpdate"  id='${i}' name="update" href=" ">  
+                     <i class="fa fa-edit">Update</i>
+                   </a>
+                     <a class="btn btn-danger mr-2 productToDelete" id='${i}'  name="detail" href=" ">  
+                       <i class="fa fa-edit">Supprimer</i>
+                     </a>
                    </div>
             </td>
       </tr>`;
-      $("#product").append(ligne);
+      $("#products").append(ligne);
     });
   }
   
@@ -62,7 +54,7 @@ $(document).ready(function () {
          const objet = generateObjet(name,price,content,quantity);
          //to request for add user
          console.log(objet);
-         addproductToAPi(objet);
+         addProductToAPi(objet);
       } else {
           alert("Field is empty !")
       }
@@ -76,7 +68,7 @@ $(document).ready(function () {
           headers: {"Content-type": "application/json; charset=UTF-8"}
       }
       //post data with  fetch
-      fetch(URL,headers)
+      fetch(URL + 'products/create',headers)
       .then(response => response.json())
       .then(data => {
         console.log(data)
@@ -89,7 +81,7 @@ $(document).ready(function () {
       })
       .catch(error => {
         // enter your logic for when there is an error (ex. error toast)
-          console.log(error)
+        console.log(error)
       })
     }
   
@@ -99,7 +91,6 @@ $(document).ready(function () {
       $("#price").val("");
       $("#quantity").val("");
       $("#content").val("");
-  
    }
 
   function generateObjet(name,price,quantity){
@@ -108,7 +99,6 @@ $(document).ready(function () {
       product['price'] = price;
       product['content'] = content;
       product['quantity'] = quantity;
-    
       return product;
   }
 
@@ -118,7 +108,6 @@ $(document).ready(function () {
           price == ''  && 
           content == '' && 
           quantity == '' 
-       
            ){
           return true;
       } else {
@@ -126,5 +115,78 @@ $(document).ready(function () {
       }
   }
   
+  $(document).on('click', '.productToDelete', function(e){
+    e.preventDefault();
+		let product_id = $(this).attr("id");
+    let objet = {'id': product_id}
+    deleteDataAPI(objet)
+    });
+
+  //supprimer
+   function deleteDataAPI(objet) {
+    //fetch vers l'api
+    fetch(URL + 'products/'+ objet.id , {
+      method: 'DELETE',
+      body: JSON.stringify(objet),
+      headers: {"Content-type": "application/json; charset=UTF-8"}
+    }
+    ) 
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      empty();
+      if(data.message){
+        alert('Un product a ete supprimé avec success');
+        //on recharge la page
+        document.location.reload();
+      }
+    })
+    .catch(error => {
+      // enter your logic for when there is an error (ex. error toast)
+        console.log(error)
+    })
+    }
+
+    //udpdate
+    $(document).on('click', '.productToUpdate', function(e){
+      e.preventDefault();
+      //show modal
+      $('#myModal').modal('show');
+      //get product id
+      var product_id = $(this).attr("id");
+      fetch(URL + 'products/' + product_id)
+      .then(response => response.json())
+      .then(product => {
+        console.log(product);
+        //show modal
+        $('#myModal').modal('show');
+        //get informations
+        $('#name').val(product.product.name);
+        $('#content').val(product.product.content);
+        $('#quantity').val(product.product.quantity);
+        $('#price').val(product.product.price);
+        //edit action
+        $('#action').html("Edit");
+        $('#operation').val("Edit");
+      });
+      });
+  
+      $(document).on('click', '.productToDetail', function(){
+      //get product id
+      var product_id = $(this).attr("id");
+      fetch(URL + 'products/' + product_id)
+      .then(response => response.json())
+      .then(product => {
+        console.log(product.product.name);
+        //show modal
+        $('#productModalDetail').modal('show');
+        //get informations
+        $('.productName').text(product.product.name);
+        $('.price').text(product.product.price + ' FCFA');
+        $('.content').text(product.product.content);
+        $('.quantity').text(product.product.quantity);
+        $('.modal-title').text("Detail product");
+      });
+      });
 
 });
