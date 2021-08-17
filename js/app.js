@@ -4,10 +4,7 @@ $(document).ready(function () {
   const URL = 'http://127.0.0.1:5000/';
  
   (function getAllProduct(){
-    fetch(URL+'products',{
-      mode:'no-cors',
-      method:'GET'
-    })
+    fetch(URL+'products')
     .then((response) => response.json())
     .then((data) => displayProduct(data))
     .catch(error => {
