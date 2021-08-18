@@ -27,7 +27,7 @@
             <h3 class="text-left p-2  text-white">Produits </h3>
           </div>
           <div class="col-md-2 col-xm-6">
-            <button type="button" class="m-2 btn btn-outline-dark" data-toggle="modal" data-target="#myModal">+</button>
+            <button type="button" class="m-2 btn btn-outline-dark" id="productModal" data-toggle="modal" data-target="#myModal">+</button>
           </div>
         </div>
         <div class="table-responsive">
@@ -53,12 +53,14 @@
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Ajouter une nouvelle</h4>
+          <h4 class="modal-title">Ajouter un produit</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <!-- Modal body -->
         <div class="modal-body">
           <form id="formProduct">
+            <input type="hidden" id="operation" name="operation" value="add">
+            <input type="hidden" id="product_id"  value="">
             <div class="card-content p-3">
               <div class="form-group">
                 <label for="name">Name</label>
@@ -78,7 +80,7 @@
               </div>
             </div>
             <div class="card-footer p-0 m-0">
-              <button class="btn btn-primary btn-block" name="bajout" type="submit">Ajouter une produit</button>
+              <button class="btn btn-primary btn-block" id="bsubmit" name="bajout" type="submit">Ajouter une produit</button>
             </div>
         </div>
         </form>
@@ -102,22 +104,11 @@
                         <h3 class="mt-2 text-center title productName"></h3>
                     </div>
                     <div class="col-md-6 border border-primary ">
-                    <table class="table mt-5">
-                    <tbody>
-                        <tr>
-                          <th>Price</th>
-                              <td class="w-50 price"></td>
-                        </tr>
-                        <tr>
-                          <th>Content</th>
-                          <td class="content"></td>
-                        </tr>
-                        <tr>
-                          <th>Quantity</th>
-                          <td class="quantity"></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <ul class="list-group p-4">
+                      <li class="list-group-item price">Price: </li>
+                      <li class="list-group-item content">Content: </li>
+                      <li class="list-group-item quantity"></li>
+                    </ul>
                     </div>
                   </div>
             </div>   
