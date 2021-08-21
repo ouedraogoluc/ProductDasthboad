@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Reunion-UA-Compatible" content="IE=edge">
@@ -15,21 +16,22 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
+
 <body>
   <?php include './includes/navbar.php' ?>
   <div class="container mt-5 mb-5">
     <div class="card border border-primarSalle">
-      <div class="card-heard bg-primary">
+      <div class="card-heard  bg-primary">
         <div class="row">
-          <div class="col-lg-9 col-md-6 col-sm-6">
-            <h3 class="text-left p-2  text-white ">Produits <span class="produitCount"></span> </h3>
+          <div class="col-md-10 col-xm-4">
+            <h3 class="text-left p-2  text-white">Produits </h3>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-md-2 col-xm-6">
             <button type="button" class="m-2 btn btn-outline-dark" id="productModal" data-toggle="modal" data-target="#myModal">+</button>
           </div>
         </div>
         <div class="table-responsive">
-          <table id="products" class="rounded-0 table bg-white table-hover w-100">
+          <table id="products" class="rounded-0 table bg-white table-hover table-content w-100">
             <thead>
               <tr>
                 <th>#</th>
@@ -44,6 +46,7 @@
         </div>
       </div>
     </div>
+  </div>
   <!-- The Modal -->
   <div class="modal fade" id="myModal">
     <div class="modal-dialog">
@@ -55,7 +58,7 @@
         </div>
         <!-- Modal body -->
         <div class="modal-body">
-          <form id="formProduct" enctype="multipart/form-data">
+          <form id="formProduct">
             <input type="hidden" id="operation" name="operation" value="add">
             <input type="hidden" id="product_id"  value="">
             <div class="card-content p-3">
@@ -77,7 +80,7 @@
               </div>
             </div>
             <div class="card-footer p-0 m-0">
-              <button class="btn btn-primary btn-block" id="bsubmit" name="bajout" type="submit">Add product</button>
+              <button class="btn btn-primary btn-block" id="bsubmit" name="bajout" type="submit">Ajouter une produit</button>
             </div>
         </div>
         </form>
@@ -88,16 +91,16 @@
   <div class="modal fade" id="productModalDetail">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                  <!-- Modal Header -->
-                  <div class="modal-header bg-dark text-white">
+                    <!-- Modal Header -->
+                    <div class="modal-header bg-dark text-white">
                         <h4 class="modal-title"></h4>
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-                  <!-- Modal body -->
-                  <div class="modal-body">    
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">    
                     <div class="row  d-flex justify-content-center ">
                         <div class="col-md-4 border border-primary ">
-                        <img src="./images/product.png"   alt="Guernsey" class="img-fluid avatar productImage border border-primary img-thumbnail mt-3 p-2 rounded">
+                        <img src="./images/product.png"   alt="Guernsey" class="img-fluid avatar border border-primary img-thumbnail mt-3 p-2 rounded">
                         <h3 class="mt-2 text-center title productName"></h3>
                     </div>
                     <div class="col-md-6 border border-primary ">
@@ -112,31 +115,8 @@
             </div>
         </div>
       </div>
-
-      <div class="modal fade" id="modalProductImage">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header bg-primary text-white">
-                        <h4 class="modal-title text-center">Upload image  </h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <hr>
-                    <!-- Modal body -->
-                    <div class="modal-body">    
-                      <hr>
-                      <form  id="uploadForm" enctype="multipart/form-data">
-                       <h3 class="text-center">Image du produit</h3>
-                         <input type="file" class="form-control p-5" name="image" id="image">
-                         <button type="submit" class="mt-4 btn-block btn btn-primary">Envoyer</button>
-                      </form>
-                      <div id="uploadImageResult"></div>
-                      
-                    </div>   
-            </div>
-        </div>
-      </div>
   </div>
   <script src="./js/app.js"></script>
 </body>
+
 </html>
