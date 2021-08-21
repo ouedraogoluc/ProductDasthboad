@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
    function resetForm() {
+     //open modal
     $("#productModal").click(function (e) { 
       e.preventDefault();
      const form = document.querySelector('form');
